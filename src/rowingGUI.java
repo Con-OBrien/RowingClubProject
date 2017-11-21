@@ -1,35 +1,29 @@
 
 
 import java.awt.*;
-import java.awt.SplashScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import javax.naming.Context;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class rowingGUI extends JFrame implements ActionListener{
+public class RowingGUI extends JFrame implements ActionListener{
 
     private final JMenuItem newAction, updateAction, removeAction, queryAction, exitAction, simulateAction;
     public int count;
     //public static Member [] members;
     ArrayList<Member> members = new ArrayList<Member>();
 
-    private rowingGUI() {
-
-
+    private RowingGUI() {
 
         setIconImage(new ImageIcon(".\\images\\sailboat.png").getImage());
         setBackground(Color.darkGray);
         setTitle("Rowing Club Menu");
-        setSize(500, 250);
+        setSize(500, 800);
+        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(screenSize.width/2-this.getSize().width/2, screenSize.height/2-this.getSize().height/2);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,13 +67,22 @@ public class rowingGUI extends JFrame implements ActionListener{
         simulateAction.addActionListener(this);
 
         JLabel image = new JLabel(new ImageIcon(".\\images\\ocean2.gif"));
-       add(image);
+        image.setVerticalAlignment(SwingConstants.TOP);
+        image.setVisible(true);
+        add(image);
+
+        /*JLabel hi = new JLabel("hello");
+        hi.setVerticalAlignment(SwingConstants.BOTTOM);
+        add(hi); */
 
     }
 
     public static void main(String[] args) {
 
-        rowingGUI me = new rowingGUI();
+        RowingGUI me = new RowingGUI();
+        Athlete [] athletes;
+        athletes = new Athlete[25];
+
 
         me.setVisible(true);
     }
@@ -96,24 +99,19 @@ public class rowingGUI extends JFrame implements ActionListener{
         String phone = "0863025601";
         int age = 19;
         int height = 180; */
-        /*
-
-         String coachname = "John";
-        int coachnum= 10;  */
 
         //Input Dialogs for adding a new member
 
 
-            String fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            String sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            String gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            String email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            isValidEmail(email);
-            String phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            String ageAsString = JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            int age = Integer.parseInt(ageAsString);
-            String heightAsString = JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            int height = Integer.parseInt(heightAsString);
+        String fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        String sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        String gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        String email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        String phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        String ageAsString = JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        int age = Integer.parseInt(ageAsString);
+        String heightAsString = JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        int height = Integer.parseInt(heightAsString);
 
 
 
@@ -127,10 +125,12 @@ public class rowingGUI extends JFrame implements ActionListener{
         if (age < 18) {
             coachname = "Mark O'Donnell";
             coachnum = 1;
-        } else if (age > 18 && age <= 35) {
+        }
+        else if (age > 18 && age <= 35) {
             coachname = "Peter Andrews";
             coachnum = 2;
-        } else {
+        }
+        else {
             coachname = "David Edgar";
             coachnum = 3;
         }
@@ -142,7 +142,7 @@ public class rowingGUI extends JFrame implements ActionListener{
 
 
         System.out.print(members.get(count).toString());
-
+        count++;
        /* try {
             FileReader reader = new FileReader("output.txt");
             FileWriter writer = new FileWriter("output.txt");
@@ -182,9 +182,9 @@ public class rowingGUI extends JFrame implements ActionListener{
 
             bw.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Error1!");
+            System.out.println("Error - file not found!");
         } catch (IOException e) {
-            System.out.println("Error2!");
+            System.out.println("Error with your input!");
         }
 
 
@@ -392,7 +392,7 @@ public class rowingGUI extends JFrame implements ActionListener{
             queryMember();
         }
         else if (e.getActionCommand() .equals ("Simulation")) {
-            int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"Please enter the amount of members you'd like to compare: (Max of 5)"));
+         /*   int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"Please enter the amount of members you'd like to compare: (Max of 5)"));
             String simMembers = "";
 
 
@@ -400,15 +400,16 @@ public class rowingGUI extends JFrame implements ActionListener{
                 String question = JOptionPane.showInputDialog(null,"Please enter the surname of the member you'd like to compare: ");
 
                 if(question.equals(members.get(i).getSname())) {
-                    simMembers += members.get(i).toString() + "\n";
-                }
+                    simMembers += members.get(i).toString() + "\n"; */
+                    simulation();
+          /*      }
                 else {
                     JOptionPane.showMessageDialog(null,"That member doesn't exist on our system");
                 }
             }
 
             JOptionPane.showMessageDialog(null,simMembers);
-
+*/
         }
         else if (e.getActionCommand() .equals ("Quit"))
         {
@@ -469,6 +470,28 @@ public class rowingGUI extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null,"Error found in function, closing now!");
             System.exit(0);
         }
+    }
+    public JFrame simulation() {
+
+    JFrame frame = new JFrame();
+
+        frame.setIconImage(new ImageIcon(".\\images\\sailboat.png").getImage());
+        frame.setTitle("Rowing Club Menu");
+        frame.setSize(750, 250);
+        frame.setBounds(0,0,750,250);
+
+
+            frame.add(new JLabel(new ImageIcon(".\\images\\water.gif")));
+            frame.setResizable(false);
+
+
+        frame.pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(screenSize.width/2-frame.getSize().width/2, screenSize.height/2-this.getSize().height/2);
+
+        frame.setVisible(true);
+
+    return frame;
     }
 }
 
