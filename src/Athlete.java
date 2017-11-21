@@ -15,5 +15,5 @@ public class Athlete extends Member {
         this.fee=membershipFee;
     }
 
-    public String toString() { return super.toString()+"\nAwards: "+ getAwards(); }
+    public String toString() { return super.toString()+"\nAward: "+ getAwards(); }
 }

@@ -26,7 +26,7 @@ public class rowingGUI extends JFrame implements ActionListener{
 
 
 
-        setIconImage(new ImageIcon("C:\\Users\\Conor\\Desktop\\sailboat.png").getImage());
+        setIconImage(new ImageIcon("..\\images\\sailboat.png").getImage());
         setBackground(Color.darkGray);
         setTitle("Rowing Club Menu");
         setSize(500, 250);
@@ -75,7 +75,7 @@ public class rowingGUI extends JFrame implements ActionListener{
         FlowLayout flowLayout = new FlowLayout();
         head.setLayout(flowLayout);
         head.setSize(100,100);
-        add(new JLabel(new ImageIcon("C:\\Users\\Conor\\Desktop\\ocean2.gif")));
+        add(new JLabel(new ImageIcon("..\\images\\ocean2.gif")));
 
     }
 

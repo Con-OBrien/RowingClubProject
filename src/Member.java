@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public abstract class Member {
     private String fname;
     private String sname;
@@ -10,7 +12,7 @@ public abstract class Member {
     private String status;
     private Coach coach;
     protected double fee;
-
+    private static int numObjects=0;
 
 
    // public Member(){ this("Unknown","Unknown","Unknown","Unknown","Unknown",0,0,"Unknown","Unknown"); }
@@ -27,6 +29,7 @@ public abstract class Member {
         setDateregistered(dateregistered);
         setStatus(status);
         setCoach(new Coach(coachName, coachNum));
+        numObjects++;
         }
 
     public String getFname() { return fname; }
@@ -38,8 +41,7 @@ public abstract class Member {
     public int getHeight() { return height; }
     public String getDateregistered() { return dateregistered; }
     public String getStatus() { return status; }
-
-
+    public static int getNumObjects() { return numObjects; }
 
     public void setFname(String fname) { this.fname = fname; }
     public void setSname(String sname) { this.sname = sname; }
@@ -56,6 +58,9 @@ public abstract class Member {
 
     public abstract void setMembershipFee(double fee);
 
+    public static void setNumObjects(int numObjects) {
+        Member.numObjects = numObjects;
+    }
 
 
     public String toString() {
