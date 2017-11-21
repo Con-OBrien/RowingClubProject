@@ -26,11 +26,12 @@ public class rowingGUI extends JFrame implements ActionListener{
 
 
 
-        setIconImage(new ImageIcon("..\\images\\sailboat.png").getImage());
+        setIconImage(new ImageIcon(".\\images\\sailboat.png").getImage());
         setBackground(Color.darkGray);
         setTitle("Rowing Club Menu");
         setSize(500, 250);
-        setLocation(500, 500);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(screenSize.width/2-this.getSize().width/2, screenSize.height/2-this.getSize().height/2);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -71,11 +72,8 @@ public class rowingGUI extends JFrame implements ActionListener{
         exitAction.addActionListener(this);
         simulateAction.addActionListener(this);
 
-        JPanel head = new JPanel();
-        FlowLayout flowLayout = new FlowLayout();
-        head.setLayout(flowLayout);
-        head.setSize(100,100);
-        add(new JLabel(new ImageIcon("..\\images\\ocean2.gif")));
+        JLabel image = new JLabel(new ImageIcon(".\\images\\ocean2.gif"));
+       add(image);
 
     }
 
@@ -106,16 +104,18 @@ public class rowingGUI extends JFrame implements ActionListener{
         //Input Dialogs for adding a new member
 
 
-        String fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        isValidEmail(email);
-        String phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String ageAsString = JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        int age = Integer.parseInt(ageAsString);
-        String heightAsString = JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        int height = Integer.parseInt(heightAsString);
+            String fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            String sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            String gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            String email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            isValidEmail(email);
+            String phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            String ageAsString = JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            int age = Integer.parseInt(ageAsString);
+            String heightAsString = JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            int height = Integer.parseInt(heightAsString);
+
+
 
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
@@ -196,25 +196,24 @@ public class rowingGUI extends JFrame implements ActionListener{
         String coachname;
         int coachnum;
         String[] awardsArray = {"100m", "500m", "Endeavour", "Team"};
-        boolean valid = false;
+
         //Input Dialogs for adding a new member
         String fname = JOptionPane.showInputDialog(null,"Please enter your first name: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
+        cancelValidation(fname);
         String sname = JOptionPane.showInputDialog(null,"Please enter your last name: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
+        cancelValidation(sname);
         String gender = JOptionPane.showInputDialog(null,"Please enter your gender: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
+        cancelValidation(gender);
         String email = JOptionPane.showInputDialog(null,"Please enter your email: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-        isValidEmail(email);
-        while (!valid) {
-            while (!isValidEmail(email)) {
-                if (isValidEmail(email)) {
-                    valid = true;
-                }
-                email = JOptionPane.showInputDialog(null, "ERROR - Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-
+        cancelValidation(email);
         String phone = JOptionPane.showInputDialog(null,"Please enter your phone: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-        int age = Integer.parseInt(JOptionPane.showInputDialog(null,"Please enter your age: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE));
-        int height = Integer.parseInt(JOptionPane.showInputDialog(null,"Please enter your height: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE));
+        cancelValidation(phone);
+        String ageAsString = JOptionPane.showInputDialog(null,"Please enter your age: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
+        cancelValidation(ageAsString);
+        int age = Integer.parseInt(ageAsString);
+        String heightAsString = JOptionPane.showInputDialog(null,"Please enter your height: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
+        cancelValidation(heightAsString);
+        int height = Integer.parseInt(heightAsString);
         int awardsOption = JOptionPane.showOptionDialog(null,"What awards would you like to go for: ","Rowing Club",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,awardsArray,awardsArray[3]);
         String awards = awardsArray[awardsOption];
 
@@ -456,6 +455,20 @@ public class rowingGUI extends JFrame implements ActionListener{
             }
         }
         return valid;
+    }
+    public void cancelValidation(String input) {
+
+        try {
+            int inputAsInt = Integer.parseInt(input);
+
+            if (inputAsInt == JOptionPane.CANCEL_OPTION) {
+                JOptionPane.showMessageDialog(null, "Exiting add function now!");
+                setVisible(true);
+            }
+        }catch(NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null,"Error found in function, closing now!");
+            System.exit(0);
+        }
     }
 }
 
