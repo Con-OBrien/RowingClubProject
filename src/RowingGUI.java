@@ -44,19 +44,13 @@ public class RowingGUI extends JFrame implements ActionListener{
         editMenu();
         funcMenu();
 
-        picPanel = new JPanel();
-        picPanel.add(Box.createVerticalStrut(10));
-        picPanel.setLayout(new BoxLayout(picPanel, BoxLayout.Y_AXIS));
-        picPanel.add(Box.createVerticalStrut(35));
+
 
         //PROBLEM HERE
         try
         {
-            System.out.println(getClass().getResource(".\\images\\boat.jpg").getFile());
-
-            header = new JLabel();
-            header.setIcon(new ImageIcon(getClass().getResource(".\\images\\boat.jpg").getFile()));
-            picPanel.add(header);
+            JLabel image = new JLabel(new ImageIcon(".\\images\\ocean2.gif"));
+           add(image);
         }
         catch (Exception ex)
         {
@@ -81,13 +75,14 @@ public class RowingGUI extends JFrame implements ActionListener{
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("members.dat"));
             oos.writeObject(members);
             oos.close();
+            
+            JOptionPane.showMessageDialog(null,"File saved successfully!");
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.WARNING_MESSAGE);
             e.printStackTrace();
         }
-
     }
     public void read()
     {
@@ -410,7 +405,6 @@ public class RowingGUI extends JFrame implements ActionListener{
 
             try {
                 save();
-                JOptionPane.showMessageDialog(null, "Data saved successfully", "Rowing CLUB", JOptionPane.INFORMATION_MESSAGE);
             }
             catch (IOException f) {
                 JOptionPane.showMessageDialog(null, "Error - data did not save!", "Rowing CLUB", JOptionPane.WARNING_MESSAGE);
