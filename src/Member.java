@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Member {
+public abstract class Member implements Serializable {
     private String fname;
     private String sname;
     private String gender;
@@ -12,7 +13,7 @@ public abstract class Member {
     private String status;
     private Coach coach;
     protected double fee;
-    private static int numObjects=0;
+    private static int numObjects;
 
 
    // public Member(){ this("Unknown","Unknown","Unknown","Unknown","Unknown",0,0,"Unknown","Unknown"); }
@@ -41,7 +42,7 @@ public abstract class Member {
     public int getHeight() { return height; }
     public String getDateregistered() { return dateregistered; }
     public String getStatus() { return status; }
-    public static int getNumObjects() { return numObjects; }
+
 
     public void setFname(String fname) { this.fname = fname; }
     public void setSname(String sname) { this.sname = sname; }
@@ -61,7 +62,7 @@ public abstract class Member {
     public static void setNumObjects(int numObjects) {
         Member.numObjects = numObjects;
     }
-
+    public static int getNumObjects() { return numObjects; }
 
     public String toString() {
 

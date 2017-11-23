@@ -13,9 +13,9 @@ import javax.swing.*;
 public class RowingGUI extends JFrame implements ActionListener{
 
     public int count;
-    //public static Member [] members;
     ArrayList<Member> members = new ArrayList<Member>();
     private Member member;
+    Member[] memLoad;
     JLabel header;
     JPanel picPanel;
     JMenu fileMenu, editMenu, funcMenu;
@@ -24,6 +24,7 @@ public class RowingGUI extends JFrame implements ActionListener{
 
     private RowingGUI() {
 
+        newSystem();
 
         //Set basics
         setIconImage(new ImageIcon(".\\images\\sailboat.png").getImage());
@@ -72,15 +73,22 @@ public class RowingGUI extends JFrame implements ActionListener{
     public void save() throws IOException {
 
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("members.dat"));
+
+            File file = new File("members1.dat");
+
+            FileOutputStream fos = new FileOutputStream(file);
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            //ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("members.dat"));
             oos.writeObject(members);
             oos.close();
-            
+
             JOptionPane.showMessageDialog(null,"File saved successfully!");
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(null, "File not found", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "File not found", "Rowing Club", JOptionPane.WARNING_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -88,15 +96,23 @@ public class RowingGUI extends JFrame implements ActionListener{
     {
         try
         {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("staffs.dat"));
-            members = ((ArrayList)ois.readObject());
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("members1.dat"));
+
+            members = ((ArrayList) ois.readObject());
+            for(int i=0; i<members.size();i++) {
+          //      members = ((ArrayList) ois.readObject());
+                memLoad[i] = members.get(i);
+                System.out.print("loop");
+                System.out.print(members.get(i).toString());
+            }
+
             ois.close();
 
-            JOptionPane.showMessageDialog(null, "File loaded to the system.", "Open", 1);
+            JOptionPane.showMessageDialog(null, "File loaded to the system.", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "File not found", "Error", 0);
+            JOptionPane.showMessageDialog(null, "File not found", "Rowing Club", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -142,11 +158,13 @@ public class RowingGUI extends JFrame implements ActionListener{
         editMenu.add(updateAction);
         editMenu.add(removeAction);
         editMenu.add(queryAction);
+        editMenu.add(listAction);
 
         addAction.addActionListener(this);
         updateAction.addActionListener(this);
         removeAction.addActionListener(this);
         queryAction.addActionListener(this);
+        listAction.addActionListener(this);
 
     }
     private void funcMenu() {
@@ -395,14 +413,32 @@ public class RowingGUI extends JFrame implements ActionListener{
             System.exit(0);
 
     }
+    private void newSystem() {
+        memLoad = new Member[5];
+        count = 0;
+        Member.setNumObjects(members.size());
+    }
+    private void display() {
+
+        JTextArea jta = new JTextArea();
+        if (members.size()>0) {
+            jta.setText("Tralee Rowing Club Members List: \n\n");
+            for (int i = 0; i<members.size(); i++) {
+                jta.append("Member ID: " + (i+1) + "\n " + memLoad[i].toString() + "\n\n");
+            }
+            JOptionPane.showMessageDialog(null,jta);
+        }
+        else
+            JOptionPane.showMessageDialog(null,"No members in the system");
+    }
     public void actionPerformed(ActionEvent e) {
 
 
         if(e.getActionCommand() .equals("Load")) {
                 read();
+                display();
         }
         else if(e.getActionCommand() .equals("Save")) {
-
             try {
                 save();
             }

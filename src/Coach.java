@@ -1,4 +1,6 @@
-public class Coach {
+import java.io.Serializable;
+
+public class Coach implements Serializable {
     private int coachNum;
     private String coachName;
 
