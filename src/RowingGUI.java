@@ -62,12 +62,6 @@ public class RowingGUI extends JFrame implements ActionListener{
     public static void main(String[] args) {
 
         RowingGUI me = new RowingGUI();
-
-        //SAVE & READ/FROM FILE STILL PROBLEM
-        Athlete [] athletes;
-        athletes = new Athlete[25];
-
-
         me.setVisible(true);
     }
     public void save() throws IOException {
