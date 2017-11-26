@@ -384,38 +384,27 @@ public class RowingGUI extends JFrame implements ActionListener{
 
     private void queryMember() {
 
-        setVisible(true);
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the member you'd like to enquire about: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-        int questionOpt = Integer.parseInt(question);
 
-        if(questionOpt == JOptionPane.OK_OPTION) {
-            if(question.equals(" "))
-            {
-                JOptionPane.showInputDialog(null, "ERROR - Enter the surname of the member you'd like to enquire about: ");
-            }
-
-            else
-                for (int i = 0; i < members.size(); i++) {
-
+        try {
+            for (int i = 0; i < members.size(); i++) {
                 if (question.equals(members.get(i).getSname())) {
-                    //  rowingMembers[i] = null;
-                    JOptionPane.showMessageDialog(null, members.get(i).toString());
-                    System.exit(0);
+                        //  rowingMembers[i] = null;
+                        JOptionPane.showMessageDialog(null, members.get(i).toString());
                 }
-                else
-                    question = JOptionPane.showInputDialog(null, "ERROR - Enter the surname of the member you'd like to remove: ");
-
+                else {
+                    JOptionPane.showMessageDialog(null,"No member found");
+                }
             }
-
         }
-        else
-            System.exit(0);
+        catch (NumberFormatException n) {
+            System.out.print("yes");
+        }
 
     }
     private void newSystem() {
-        memLoad = new Member[5];
+        memLoad = new Member[50];
         count = 0;
-        Member.setNumObjects(members.size());
     }
     private void displayActive() {
 
@@ -450,8 +439,8 @@ public class RowingGUI extends JFrame implements ActionListener{
 
         if(e.getActionCommand() .equals("Load")) {
                 read();
-               // display();
         }
+
         else if(e.getActionCommand() .equals("Save")) {
             try {
                 save();
@@ -460,11 +449,13 @@ public class RowingGUI extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Error - data did not save!", "Rowing CLUB", JOptionPane.WARNING_MESSAGE);
             }
         }
+
         else if (e.getActionCommand() .equals ("Quit"))
         {
             JOptionPane.showMessageDialog(null, "System closing now, thanks for your time", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
+
         else if (e.getActionCommand() .equals ("Add")){
 
             String[] memberships = {"Standard", "Athlete"};
@@ -477,66 +468,34 @@ public class RowingGUI extends JFrame implements ActionListener{
             }
 
         }
+
         else if (e.getActionCommand() .equals ("Update")){
             updateMember();
         }
+
         else if (e.getActionCommand() .equals ("Remove")){
             removeMember();
         }
+
         else if (e.getActionCommand() .equals ("Query")){
             queryMember();
         }
+
         else if (e.getActionCommand() .equals ("List Active Members")){
             displayActive();
         }
+
         else if (e.getActionCommand() .equals ("List All Members")){
             displayAll();
         }
+
         else if (e.getActionCommand() .equals ("Simulation")) {
             simulation();
         }
+
         else
             JOptionPane.showMessageDialog(null,"I have no idea what you clicked");
     }
-    private static boolean isValidEmail(String email)
-    {
-        String firstName,lastName,firstNameAndLastName;
-        int dotPosition, j;
-        boolean valid = false;
-
-        if(email.endsWith("@ittralee.ie") || email.endsWith("@hotmail.com") || email.endsWith("@gmail.com"))
-        {
-            firstNameAndLastName = email.substring(0,email.length() - 12);
-
-            dotPosition = firstNameAndLastName.indexOf('.');
-
-            if(dotPosition!=-1)
-            {
-                firstName = firstNameAndLastName.substring(0,dotPosition);
-                lastName = firstNameAndLastName.substring(dotPosition+1,email.length()-12);
-
-                if(!firstName.equals("") && Character.isUpperCase(firstName.charAt(0)))
-                {
-                    for(j=1;j<firstName.length();j++)
-                        if(!Character.isLowerCase(firstName.charAt(j)))
-                            break;
-
-                    if(j==firstName.length() && !lastName.equals("") &&
-                            Character.isUpperCase(lastName.charAt(0)))
-                    {
-                        for(j=1;j<lastName.length();j++)
-                            if(!Character.isLowerCase(lastName.charAt(j)))
-                                break;
-
-                        if(j==lastName.length())
-                            valid = true;
-                    }
-                }
-            }
-        }
-        return valid;
-    }
-
     private JFrame simulation() {
 
     JFrame frame = new JFrame();
