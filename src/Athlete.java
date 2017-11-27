@@ -11,9 +11,5 @@ public class Athlete extends Member {
     public void setAwards(String awards) { this.awards = awards; }
 
 
-    public void setMembershipFee(double membershipFee) {
-        this.fee=membershipFee;
-    }
-
     public String toString() { return super.toString()+"\nAward: "+ getAwards(); }
 }

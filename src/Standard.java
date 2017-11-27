@@ -9,8 +9,4 @@ public class Standard extends Member {
         super(fname, sname, gender, email, phone, age, height, dateregistered, status, coachName, coachNum);
 
     }
-    public void setMembershipFee(double carfee) {
-        fee += 150;
-    }
-    public double calcMembershipFee() { return fee; }
 }

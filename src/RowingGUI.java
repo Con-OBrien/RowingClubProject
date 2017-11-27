@@ -1,5 +1,9 @@
 
 
+import com.sun.applet2.Applet2Context;
+import com.sun.javafx.applet.Splash;
+import jdk.nashorn.internal.scripts.JO;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,16 +14,18 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+
 public class RowingGUI extends JFrame implements ActionListener{
 
-    public int count;
+    private int count;
     ArrayList<Member> members = new ArrayList<Member>();
+
     private Member member;
     Member[] memLoad;
-    JLabel header;
-    JPanel picPanel;
-    JMenu fileMenu, editMenu, funcMenu;
+    Member[] unpaidmembers;
+    private JMenu editMenu, funcMenu;
     JMenuBar menuBar;
+    int totalFees;
 
 
     private RowingGUI() {
@@ -46,15 +52,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         funcMenu();
 
 
-
-        //PROBLEM HERE
-        try
-        {
+        try {
             JLabel image = new JLabel(new ImageIcon(".\\images\\ocean2.gif"));
            add(image);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Invalid Image File in Main Screen");
         }
     }
@@ -95,11 +97,12 @@ public class RowingGUI extends JFrame implements ActionListener{
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("members1.dat"));
 
             members = ((ArrayList) ois.readObject());
-            for(i=0; i<members.size();i++) {
-          //      members = ((ArrayList) ois.readObject());
-                    memLoad[i] = members.get(i);
 
+            for(i=0; i<members.size();i++) {
+                memLoad[i] = members.get(i);
             }
+
+            totalFees += 100*members.size();
             count = i;
             ois.close();
 
@@ -111,9 +114,10 @@ public class RowingGUI extends JFrame implements ActionListener{
             e.printStackTrace();
         }
     }
+
     private void fileMenu() {
 
-        fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
 
         JMenuItem loadAction, saveAction, exitAction;
@@ -133,6 +137,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         saveAction.addActionListener(this);
         exitAction.addActionListener(this);
     }
+
     private void editMenu() {
 
         editMenu = new JMenu("Edit");
@@ -167,6 +172,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         listAllAction.addActionListener(this);
 
     }
+
     private void funcMenu() {
 
         funcMenu = new JMenu("Functions");
@@ -174,26 +180,30 @@ public class RowingGUI extends JFrame implements ActionListener{
 
         JMenuItem simulationAction;
 
-        simulationAction = new JMenuItem("Simulation");
+        simulationAction = new JMenuItem("Fees");
         simulationAction.addActionListener(this);
         funcMenu.add(simulationAction);
 
     }
+
     private void addStandard() {
 
         String coachname;
-        int coachnum;
+        int coachnum, age = 0, height = 0;
+        String fname = "", sname = "", gender = "", email = "", phone = "";
 
-        String fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        String ageAsString = JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        int age = Integer.parseInt(ageAsString);
-        String heightAsString = JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
-        int height = Integer.parseInt(heightAsString);
-
+    try {
+            fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            age = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE));
+            height = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE));
+    }
+    catch (Exception n) {
+        JOptionPane.showMessageDialog(null,"Cancel option selected exiting now!");
+    }
 
 
         LocalDate date = LocalDate.now();
@@ -220,12 +230,14 @@ public class RowingGUI extends JFrame implements ActionListener{
         //members[count] = mem;
         members.add(mem);
 
-        System.out.print(members.get(count).toString());
+        if(!fname.equals("") && !sname.equals("") && !gender.equals("") && !email.equals("") && !phone.equals("") && age!=0 && height!=0 ) {
+            JOptionPane.showMessageDialog(null,members.get(count).toString());
+        }
         count++;
 
         setVisible(true);
-
     }
+
     private void addAthlete() {
 
         String coachname;
@@ -276,8 +288,8 @@ public class RowingGUI extends JFrame implements ActionListener{
         count++;
 
         setVisible(true);
-
     }
+
     private void updateMember() {
 
 
@@ -360,6 +372,7 @@ public class RowingGUI extends JFrame implements ActionListener{
             setVisible(true);
         }
     }
+
     private void removeMember()
     {
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the member you'd like to remove: ");
@@ -409,6 +422,11 @@ public class RowingGUI extends JFrame implements ActionListener{
     private void displayActive() {
 
         JTextArea jta = new JTextArea();
+        jta.setSize(400,400);
+
+        JScrollPane scrollV = new JScrollPane (jta);
+        scrollV.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
         if (members.size()>0) {
             jta.setText("Tralee Rowing Club Members List: \n\n");
             for (int i = 0; i<members.size(); i++) {
@@ -424,6 +442,9 @@ public class RowingGUI extends JFrame implements ActionListener{
     private void displayAll() {
 
         JTextArea jta = new JTextArea();
+        jta.setFont(new Font("arian", Font.BOLD, 10));
+        jta.setSize(400,300);
+
         if (members.size()>0) {
             jta.setText("Tralee Rowing Club Members List: \n\n");
             for (int i = 0; i<members.size(); i++) {
@@ -433,6 +454,8 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
         else
             JOptionPane.showMessageDialog(null,"No members in the system");
+
+
     }
     public void actionPerformed(ActionEvent e) {
 
@@ -463,6 +486,7 @@ public class RowingGUI extends JFrame implements ActionListener{
 
             if (question2 == 0) {
                 addStandard();
+
             } else if (question2 == 1) {
                 addAthlete();
             }
@@ -489,34 +513,18 @@ public class RowingGUI extends JFrame implements ActionListener{
             displayAll();
         }
 
-        else if (e.getActionCommand() .equals ("Simulation")) {
-            simulation();
+        else if (e.getActionCommand() .equals ("Fees")) {
+            feesFunc();
         }
 
         else
             JOptionPane.showMessageDialog(null,"I have no idea what you clicked");
     }
-    private JFrame simulation() {
+    private void feesFunc() {
 
-    JFrame frame = new JFrame();
-
-        frame.setIconImage(new ImageIcon(".\\images\\sailboat.png").getImage());
-        frame.setTitle("Rowing Club Menu");
-        frame.setSize(750, 250);
-        frame.setBounds(0,0,750,250);
-
-
-            frame.add(new JLabel(new ImageIcon(".\\images\\water.gif")));
-            frame.setResizable(false);
-
-
-        frame.pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(screenSize.width/2-frame.getSize().width/2, screenSize.height/2-this.getSize().height/2);
-
-        frame.setVisible(true);
-
-    return frame;
+        JOptionPane.showMessageDialog(null,"Total Membership fees: " + totalFees + "\n" +
+                "Total Members: " + members.size() + "\n\nThe first member was : " + members.get(0).getFname() + " " + members.get(0).getSname() + "\nThat member joined on: " + members.get(0).getDateregistered() +
+        "\n\nMembers who haven't paid their fees: ");
     }
 }
 

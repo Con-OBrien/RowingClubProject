@@ -12,7 +12,6 @@ public abstract class Member implements Serializable {
     private String dateregistered;
     private String status;
     private Coach coach;
-    protected double fee;
     private static int numObjects;
 
 
@@ -57,7 +56,6 @@ public abstract class Member implements Serializable {
     public Coach getCoach() { return coach; }
     public void setCoach(Coach coach) { this.coach = coach; }
 
-    public abstract void setMembershipFee(double fee);
 
     public static void setNumObjects(int numObjects) {
         Member.numObjects = numObjects;
