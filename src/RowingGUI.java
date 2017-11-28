@@ -1,9 +1,5 @@
 
 
-import com.sun.applet2.Applet2Context;
-import com.sun.javafx.applet.Splash;
-import jdk.nashorn.internal.scripts.JO;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -193,6 +189,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         String fname = "", sname = "", gender = "", email = "", phone = "";
 
     try {
+            addMember g = new addMember();
             fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
             sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
             gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
@@ -211,6 +208,8 @@ public class RowingGUI extends JFrame implements ActionListener{
         String dateregistered = date.format(formatter);
 
 
+        boolean paid = true;
+
         String status = "Active";
 
         if (age < 18) {
@@ -226,7 +225,7 @@ public class RowingGUI extends JFrame implements ActionListener{
             coachnum = 3;
         }
 
-        Standard mem = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, status, coachname, coachnum);
+        Standard mem = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, paid, status, coachname, coachnum);
         //members[count] = mem;
         members.add(mem);
 
@@ -248,22 +247,23 @@ public class RowingGUI extends JFrame implements ActionListener{
         boolean valid = false;
         //Input Dialogs for adding a new member
 
-         fname = JOptionPane.showInputDialog(null,"Please enter your first name: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-         sname = JOptionPane.showInputDialog(null,"Please enter your last name: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-         gender = JOptionPane.showInputDialog(null,"Please enter your gender: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-         email = JOptionPane.showInputDialog(null,"Please enter your email: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-         phone = JOptionPane.showInputDialog(null,"Please enter your phone: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE);
-         age = Integer.parseInt(JOptionPane.showInputDialog(null,"Please enter your age: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE));
-         height = Integer.parseInt(JOptionPane.showInputDialog(null,"Please enter your height: ","Rowing Club",JOptionPane.INFORMATION_MESSAGE));
-         int awardsOption = JOptionPane.showOptionDialog(null,"What awards would you like to go for: ","Rowing Club",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,awardsArray,awardsArray[3]);
-         awards = awardsArray[awardsOption];
+        try {
+            fname = JOptionPane.showInputDialog(null, "Please enter your first name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            sname = JOptionPane.showInputDialog(null, "Please enter your last name: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            gender = JOptionPane.showInputDialog(null, "Please enter your gender: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            email = JOptionPane.showInputDialog(null, "Please enter your email: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            phone = JOptionPane.showInputDialog(null, "Please enter your phone: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            age = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your age: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE));
+            height = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your height: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE));
+            int awardsOption = JOptionPane.showOptionDialog(null, "What awards would you like to go for: ", "Rowing Club", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, awardsArray, awardsArray[3]);
+            awards = awardsArray[awardsOption];
 
 
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
         String dateregistered = date.format(formatter);
 
-
+        boolean paid = true;
         String status = "Active";
 
         if(age < 18) {
@@ -281,13 +281,24 @@ public class RowingGUI extends JFrame implements ActionListener{
             coachnum = 6;
         }
 
-        Athlete mem = new Athlete(fname, sname, gender, email, phone, age, height, dateregistered, status, coachname, coachnum, awards);
+        Athlete mem = new Athlete(fname, sname, gender, email, phone, age, height, dateregistered, paid, status, coachname, coachnum, awards);
         members.add(mem);
 
-        JOptionPane.showMessageDialog(null,members.get(count).toString());
+
+        if(!fname.equals("") || !sname.equals("") || !gender.equals("") || !email.equals("") || !phone.equals("") || age!=0 || height!=0 ) {
+            JOptionPane.showMessageDialog(null,members.get(count).toString());
+        }
+
         count++;
 
         setVisible(true);
+        }
+        catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(null,"Not sure what you selected! Exiting now!");
+        }
+        catch (Exception n) {
+            JOptionPane.showMessageDialog(null,"Cancel option selected exiting now!");
+        }
     }
 
     private void updateMember() {
@@ -481,6 +492,7 @@ public class RowingGUI extends JFrame implements ActionListener{
 
         else if (e.getActionCommand() .equals ("Add")){
 
+
             String[] memberships = {"Standard", "Athlete"};
             int question2 = JOptionPane.showOptionDialog(null, "What type of membership would you like?","Rowing Club",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,null,memberships,memberships[1]);
 
@@ -522,9 +534,14 @@ public class RowingGUI extends JFrame implements ActionListener{
     }
     private void feesFunc() {
 
-        JOptionPane.showMessageDialog(null,"Total Membership fees: " + totalFees + "\n" +
-                "Total Members: " + members.size() + "\n\nThe first member was : " + members.get(0).getFname() + " " + members.get(0).getSname() + "\nThat member joined on: " + members.get(0).getDateregistered() +
-        "\n\nMembers who haven't paid their fees: ");
+        try {
+            JOptionPane.showMessageDialog(null, "Total Membership fees: " + totalFees + "\n" +
+                    "Total Members: " + members.size() + "\n\nThe first member was : " + members.get(0).getFname() + " " + members.get(0).getSname() + "\nThat member joined on: " + members.get(0).getDateregistered() +
+                    "\n\nMembers who haven't paid their fees: ");
+        }
+        catch(IndexOutOfBoundsException i) {
+            JOptionPane.showMessageDialog(null,"File not found to reference, quitting function now..");
+        }
     }
 }
 
