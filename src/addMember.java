@@ -6,8 +6,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class addMember {
-    JTextField poundsField;
-    JTextField kilosField;
+    JTextField fnameBox;
+    JTextField snameBox;
+    JTextField genderBox;
+    JTextField emailBox;
+    JTextField phoneBox;
+    JTextField ageBox;
+    JTextField heightBox;
+    JComboBox experienceBox;
+    JCheckBox paidBox;
 
     public addMember()
     {
@@ -20,15 +27,15 @@ public class addMember {
         main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String[] experiencelvls = { "Novice", "Recreational", "Competitive"};
 
-        JTextField fnameBox = new JTextField(10);
-        JTextField snameBox = new JTextField(10);
-        JTextField genderBox = new JTextField(10);
-        JTextField emailBox = new JTextField(10);
-        JTextField phoneBox = new JTextField(10);
-        JTextField ageBox = new JTextField(10);
-        JTextField heightBox = new JTextField(10);
-        JComboBox experienceBox = new JComboBox(experiencelvls);
-        JCheckBox paidBox = new JCheckBox();
+        fnameBox = new JTextField(10);
+        snameBox = new JTextField(10);
+        genderBox = new JTextField(10);
+        emailBox = new JTextField(10);
+        phoneBox = new JTextField(10);
+        ageBox = new JTextField(10);
+        heightBox = new JTextField(10);
+        experienceBox = new JComboBox(experiencelvls);
+        paidBox = new JCheckBox();
 
        // main.setLayout(new FlowLayout());
         main.setLayout(new GridLayout(0,1));
@@ -92,7 +99,7 @@ public class addMember {
         }
     }
     catch (NumberFormatException n) {
-        System.out.print("Number format exception");
+        System.out.print("");
     }
       //  Standard standard = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, paid, status, coachname, coachnum);
 
@@ -118,9 +125,7 @@ public class addMember {
             String poundsAsString,kilosAsString;
             double kilos,pounds;
 
-            if((poundsField.getText().equals("") && kilosField.getText().equals(""))
-                    || (!poundsField.getText().equals("") && !kilosField.getText().equals("")))
-            {
+            if((fnameBox.getText().equals("") || snameBox.getText().equals("")) || snameBox.getText().equals("") || snameBox.getText().equals("") || snameBox.getText().equals("")) {
                 JOptionPane.showMessageDialog(null,"You must enter a value into one " +
                                 "field and one field only","Error",
                         JOptionPane.ERROR_MESSAGE);
