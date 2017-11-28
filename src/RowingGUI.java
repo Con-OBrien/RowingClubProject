@@ -13,8 +13,8 @@ import javax.swing.*;
 
 public class RowingGUI extends JFrame implements ActionListener{
 
-    private int count;
-    ArrayList<Member> members = new ArrayList<Member>();
+    public static int count;
+    static ArrayList<Member> members = new ArrayList<Member>();
 
     private Member member;
     Member[] memLoad;
@@ -62,7 +62,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         RowingGUI me = new RowingGUI();
         me.setVisible(true);
     }
-    public void save() throws IOException {
+    public static void save() throws IOException {
 
         try {
 
@@ -225,9 +225,9 @@ public class RowingGUI extends JFrame implements ActionListener{
             coachnum = 3;
         }
 
-        Standard mem = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, paid, status, coachname, coachnum);
-        //members[count] = mem;
-        members.add(mem);
+      //  Standard mem = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, paid, status, coachname, coachnum);
+
+    //    members.add(mem);
 
         if(!fname.equals("") && !sname.equals("") && !gender.equals("") && !email.equals("") && !phone.equals("") && age!=0 && height!=0 ) {
             JOptionPane.showMessageDialog(null,members.get(count).toString());
@@ -281,8 +281,8 @@ public class RowingGUI extends JFrame implements ActionListener{
             coachnum = 6;
         }
 
-        Athlete mem = new Athlete(fname, sname, gender, email, phone, age, height, dateregistered, paid, status, coachname, coachnum, awards);
-        members.add(mem);
+      //  Athlete mem = new Athlete(fname, sname, gender, email, phone, age, height, dateregistered, paid, experience, status, coachname, coachnum, awards);
+     //   members.add(mem);
 
 
         if(!fname.equals("") || !sname.equals("") || !gender.equals("") || !email.equals("") || !phone.equals("") || age!=0 || height!=0 ) {
@@ -493,7 +493,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         else if (e.getActionCommand() .equals ("Add")){
 
 
-            String[] memberships = {"Standard", "Athlete"};
+           /* String[] memberships = {"Standard", "Athlete"};
             int question2 = JOptionPane.showOptionDialog(null, "What type of membership would you like?","Rowing Club",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,null,memberships,memberships[1]);
 
             if (question2 == 0) {
@@ -501,8 +501,11 @@ public class RowingGUI extends JFrame implements ActionListener{
 
             } else if (question2 == 1) {
                 addAthlete();
-            }
+            } */
+            addMember a = new addMember();
 
+           // System.out.print(members.size());
+            count++;
         }
 
         else if (e.getActionCommand() .equals ("Update")){
@@ -529,9 +532,11 @@ public class RowingGUI extends JFrame implements ActionListener{
             feesFunc();
         }
 
-        else
-            JOptionPane.showMessageDialog(null,"I have no idea what you clicked");
-    }
+        else {
+            JOptionPane.showMessageDialog(null, "I have no idea what you clicked");
+        }
+
+        }
     private void feesFunc() {
 
         try {
