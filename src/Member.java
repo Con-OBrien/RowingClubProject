@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
 
 public abstract class Member implements Serializable {
     private String fname;
@@ -19,7 +20,7 @@ public abstract class Member implements Serializable {
 
    // public Member(){ this("Unknown","Unknown","Unknown","Unknown","Unknown",0,0,"Unknown","Unknown"); }
 
-    public Member(String fname,String sname,String gender,String email,String phone,int age,int height,String dateregistered, boolean paid, Object experience, String status, String coachName,int coachNum)
+    public Member(String fname,String sname,String gender,String email,String phone,int age,int height,String dateregistered, boolean paid, Object experience, String status, String coachFirstName, String coachLastName, String coachPhone)
     {
         setFname(fname);
         setSname(sname);
@@ -32,7 +33,7 @@ public abstract class Member implements Serializable {
         setPaid(paid);
         setExperience(experience);
         setStatus(status);
-        setCoach(new Coach(coachName, coachNum));
+        setCoach(new Coach(coachFirstName, coachLastName, coachPhone));
         numObjects++;
         }
 

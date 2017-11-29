@@ -1,19 +1,27 @@
 import java.io.Serializable;
 
 public class Coach implements Serializable {
-    private int coachNum;
-    private String coachName;
+    private String coachFirstName;
+    private String coachLastName;
+    private String coachPhone;
 
-    public Coach(String coachName,int coachNum)
+    public Coach(String coachFirstName, String coachLastName, String coachPhone)
     {
-        setCoachName(coachName);
-        setCoachNum(coachNum);
+        setCoachFirstName(coachFirstName);
+        setCoachLastName(coachLastName);
+        setCoachPhone(coachPhone);
     }
 
-    public int getCoachNum() { return coachNum; }
-    public void setCoachNum(int coachNum) { this.coachNum = coachNum; }
-    public String getCoachName() { return coachName; }
-    public void setCoachName(String coachName) { this.coachName = coachName; }
 
-    public String toString() { return "\nCoach Name: " + getCoachName() + "\nCoach Number: " + getCoachNum(); }
+    public String getCoachFirstName() { return coachFirstName; }
+    public String getCoachLastName() { return coachLastName; }
+    public String getCoachPhone() { return coachPhone; }
+
+
+    public void setCoachFirstName(String coachFirstName) { this.coachFirstName = coachFirstName; }
+    public void setCoachLastName(String coachLastName) { this.coachLastName = coachLastName; }
+    public void setCoachPhone(String coachPhone) { this.coachPhone = coachPhone; }
+
+    public String toString() { return "\nCoach First Name: " + getCoachFirstName() + "\nCoach Last Name: " + getCoachLastName() + "\nCoach Phone Number: " +
+                                            getCoachPhone(); }
 }
