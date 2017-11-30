@@ -15,7 +15,6 @@ public abstract class Member implements Serializable {
     private Object experience;
     private String status;
     private Coach coach;
-    private static int numObjects;
 
 
    // public Member(){ this("Unknown","Unknown","Unknown","Unknown","Unknown",0,0,"Unknown","Unknown"); }
@@ -34,7 +33,6 @@ public abstract class Member implements Serializable {
         setExperience(experience);
         setStatus(status);
         setCoach(new Coach(coachFirstName, coachLastName, coachPhone, coachStatus));
-        numObjects++;
         }
 
     public String getFname() { return fname; }
@@ -63,12 +61,6 @@ public abstract class Member implements Serializable {
     public void setExperience(Object experience) { this.experience = experience; }
     public Coach getCoach() { return coach; }
     public void setCoach(Coach coach) { this.coach = coach; }
-
-
-    public static void setNumObjects(int numObjects) {
-        Member.numObjects = numObjects;
-    }
-    public static int getNumObjects() { return numObjects; }
 
     public String toString() {
 

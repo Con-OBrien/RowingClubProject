@@ -60,7 +60,7 @@ public class RowingGUI extends JFrame implements ActionListener{
     }
     //Save data to Member & Coach files.
     public static void save() throws IOException {
-
+            //Using two separate try & catch systems to save the output streams.
         try {
 
             File membersfile = new File("members.dat");
@@ -105,7 +105,7 @@ public class RowingGUI extends JFrame implements ActionListener{
     private void read()
     {
         int i;
-
+        //Using two separate try & catch systems to load the input streams.
         try
         {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("members.dat"));
@@ -118,7 +118,7 @@ public class RowingGUI extends JFrame implements ActionListener{
                   break;
                 }
                 memLoad[i] = members.get(i);
-
+                    //Differentiating fee costs for standard members and athletes.
                 if(members.get(i).getExperience().equals("Competitive")) {
                     totalFees += 200;
                 }
@@ -170,7 +170,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
         count = coaches.size();
     }
-
+        //File Menu Bar
     private void fileMenu() {
 
         JMenu fileMenu = new JMenu("File");
@@ -193,7 +193,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         saveAction.addActionListener(this);
         exitAction.addActionListener(this);
     }
-
+        //Members Menu Bar
     private void editMenu() {
 
         JMenu editMenu;
@@ -221,6 +221,8 @@ public class RowingGUI extends JFrame implements ActionListener{
         listAllAction.addActionListener(this);
 
     }
+
+        //Coaches Menu Bar
     private void coachMenu() {
 
         JMenu coachMenu;
@@ -246,7 +248,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         listAllAction.addActionListener(this);
 
     }
-
+        //Search Menu Bar
     private void searchMenu() {
 
         JMenu searchMenu;
@@ -263,6 +265,8 @@ public class RowingGUI extends JFrame implements ActionListener{
         searchMenu.add(feesAction);
 
     }
+
+            //Update Member Method
     private void updateMember() {
 
 
@@ -345,6 +349,7 @@ public class RowingGUI extends JFrame implements ActionListener{
             setVisible(true);
         }
     }
+    //Update Coach Method
     private void updateCoach() {
 
 
@@ -357,9 +362,7 @@ public class RowingGUI extends JFrame implements ActionListener{
                 if (question.equals(coaches.get(i).getCoachLastName())) {
 
                      confirmMsg = JOptionPane.showConfirmDialog(null,"Is this the member you'd like to select?\n\n" + coaches.get(i).toString(), "Rowing Club", JOptionPane.YES_NO_OPTION);
-                /*    if (confirmMsg == 0) {
-                        break;
-                    } */
+
                 selected = i;
                 }
             }
@@ -370,7 +373,6 @@ public class RowingGUI extends JFrame implements ActionListener{
                 String question2 = JOptionPane.showInputDialog(null, "What would you like to edit? (Enter the number equivalent)\n\n" + "" +
                         "1. First Name\n2.Last Name \n3. Phone Number");
                 String updated;
-                int updatedNum;
 
                 switch (question2) {
                     case "1":
@@ -405,6 +407,8 @@ public class RowingGUI extends JFrame implements ActionListener{
             r.printStackTrace();
         }
     }
+
+    //Remove Member Method
     private void removeMember()
     {
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the member you'd like to remove: ");
@@ -426,6 +430,8 @@ public class RowingGUI extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null,"Cancel option selected, quitting now..");
         }
     }
+
+    //Remove Coach Method
     private void removeCoach()
     {
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the coach you'd like to remove: ");
@@ -447,12 +453,16 @@ public class RowingGUI extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null,"Cancel option selected, quitting now..");
         }
     }
+
+    //Initialising the arrays
     private void newSystem() {
         memLoad = new Member[50];
         coachLoad = new Coach[50];
 
         count = 0;
     }
+
+    //Display all members
     private void displayAll() {
 
         JTextArea jta = new JTextArea();
@@ -476,6 +486,8 @@ public class RowingGUI extends JFrame implements ActionListener{
 
 
     }
+
+    //Display all coaches
     private void displayAllCoaches() {
 
         JTextArea jta = new JTextArea();
@@ -499,6 +511,8 @@ public class RowingGUI extends JFrame implements ActionListener{
 
         }
 
+
+        //Action Listeners
     }
     public void actionPerformed(ActionEvent e) {
 
@@ -555,6 +569,8 @@ public class RowingGUI extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "I have no idea what you clicked","Rowing Club",JOptionPane.WARNING_MESSAGE);
         }
     }
+
+    //Search method, sorts data by specific critera.
     private void searchFunc() {
 
         String[] options  = { "Forename", "Surname", "Gender", "Email", "Phone", "Age", "Height", "Date Registered","Paid Status"  };
@@ -588,7 +604,7 @@ public class RowingGUI extends JFrame implements ActionListener{
                 paidArray.add(members.get(k).getPaidstring());
 
             }
-
+            //Sorts arrays alphabetically
             Collections.sort(fnameArray);
             Collections.sort(snameArray);
             Collections.sort(genderArray);
