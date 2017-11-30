@@ -1,14 +1,10 @@
 
 
 import java.awt.*;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -62,6 +58,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         RowingGUI me = new RowingGUI();
         me.setVisible(true);
     }
+    //Save data to Member & Coach files.
     public static void save() throws IOException {
 
         try {
@@ -103,7 +100,9 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
         JOptionPane.showMessageDialog(null,"File saved successfully!");
     }
-    public void read()
+
+    //Load data from Member & Coach files.
+    private void read()
     {
         int i;
 
@@ -128,16 +127,14 @@ public class RowingGUI extends JFrame implements ActionListener{
                 }
             }
 
-
             ois.close();
-
-            JOptionPane.showMessageDialog(null, "File loaded to the system.", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, "MEMBERS - File not found", "Rowing Club", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+
         try {
             ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("coaches.dat"));
             coaches = ((ArrayList) ois2.readObject());
@@ -171,7 +168,6 @@ public class RowingGUI extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "NULLPOINTEREXCEPTION", "Rowing Club", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-
         count = coaches.size();
     }
 
@@ -204,7 +200,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         editMenu = new JMenu("Members");
         menuBar.add(editMenu);
 
-        JMenuItem addAction, updateAction, removeAction, queryAction, listAllAction, desc;
+        JMenuItem addAction, updateAction, removeAction, listAllAction;
 
         addAction = new JMenuItem("Add Member");
         updateAction = new JMenuItem("Update Member");
@@ -257,11 +253,14 @@ public class RowingGUI extends JFrame implements ActionListener{
         searchMenu = new JMenu("Search");
         menuBar.add(searchMenu);
 
-        JMenuItem simulationAction;
+        JMenuItem searchAction, feesAction ;
 
-        simulationAction = new JMenuItem("Search");
-        simulationAction.addActionListener(this);
-        searchMenu.add(simulationAction);
+        searchAction = new JMenuItem("Search");
+        feesAction = new JMenuItem("Fees");
+        searchAction.addActionListener(this);
+        feesAction.addActionListener(this);
+        searchMenu.add(searchAction);
+        searchMenu.add(feesAction);
 
     }
     private void updateMember() {
@@ -346,6 +345,66 @@ public class RowingGUI extends JFrame implements ActionListener{
             setVisible(true);
         }
     }
+    private void updateCoach() {
+
+
+        String question = JOptionPane.showInputDialog(null, "Enter the surname of the coach you'd like to update: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+        int i, selected = 0;
+       int confirmMsg = 1;
+
+        try {
+            for (i = 0; i < coaches.size(); i++) {
+                if (question.equals(coaches.get(i).getCoachLastName())) {
+
+                     confirmMsg = JOptionPane.showConfirmDialog(null,"Is this the member you'd like to select?\n\n" + coaches.get(i).toString(), "Rowing Club", JOptionPane.YES_NO_OPTION);
+                /*    if (confirmMsg == 0) {
+                        break;
+                    } */
+                selected = i;
+                }
+            }
+
+
+            if (confirmMsg == 0) {
+
+                String question2 = JOptionPane.showInputDialog(null, "What would you like to edit? (Enter the number equivalent)\n\n" + "" +
+                        "1. First Name\n2.Last Name \n3. Phone Number");
+                String updated;
+                int updatedNum;
+
+                switch (question2) {
+                    case "1":
+                        updated = JOptionPane.showInputDialog(null, "Enter new first name: ");
+                        coaches.get(selected).setCoachFirstName(updated);
+                        break;
+                    case "2":
+                        updated = JOptionPane.showInputDialog(null, "Enter new last name: ");
+                        coaches.get(selected).setCoachLastName(updated);
+                        break;
+                    case "3":
+                        updated = JOptionPane.showInputDialog(null, "Enter new phone number: ");
+                        coaches.get(selected).setCoachPhone(updated);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Invalid number entered, exiting update option now!");
+                        setVisible(true);
+                        break;
+
+                }
+                JOptionPane.showMessageDialog(null,"Field has been updated successfully!");
+                JOptionPane.showMessageDialog(null, "Make sure to save!\n\n" + coaches.get(selected).toString(), "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(null,"Cancel option selected! Exiting now..");
+            setVisible(true);
+        }
+        catch (IndexOutOfBoundsException r) {
+            JOptionPane.showMessageDialog(null,"Member not found! Exiting now..");
+            setVisible(true);
+            r.printStackTrace();
+        }
+    }
     private void removeMember()
     {
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the member you'd like to remove: ");
@@ -358,6 +417,27 @@ public class RowingGUI extends JFrame implements ActionListener{
 
                     members.get(i).setStatus("Inactive");
                     JOptionPane.showMessageDialog(null, "Member has been set to inactive: \n\n" + members.get(i).toString());
+                    setVisible(true);
+                }
+
+            }
+        }
+        catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(null,"Cancel option selected, quitting now..");
+        }
+    }
+    private void removeCoach()
+    {
+        String question = JOptionPane.showInputDialog(null,"Enter the surname of the coach you'd like to remove: ");
+
+
+        try {
+            for (int i = 0; i < coaches.size(); i++) {
+
+                if (question.equals(coaches.get(i).getCoachLastName())) {
+
+                    coaches.get(i).setCoachStatus("Inactive");
+                    JOptionPane.showMessageDialog(null, "Member has been set to inactive: \n\n" + coaches.get(i).toString());
                     setVisible(true);
                 }
 
@@ -401,22 +481,23 @@ public class RowingGUI extends JFrame implements ActionListener{
         JTextArea jta = new JTextArea();
         jta.setFont(new Font("arian", Font.BOLD, 10));
         jta.setSize(400,300);
-
+        try {
         if (coaches.size()>0) {
             jta.setText("Tralee Rowing Club Coaches List: \n\n");
             for (int i = 0; i<coaches.size(); i++) {
-                try {
+
                     jta.append(coachLoad[i].toString() + "\n\n");
-                }
-                catch (NullPointerException n) {
-                    n.printStackTrace();
-                }
+
             }
-            JOptionPane.showMessageDialog(null,jta);
+            JOptionPane.showMessageDialog(null,jta,"Rowing Club",JOptionPane.INFORMATION_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null,"No coaches in the system");
+            JOptionPane.showMessageDialog(null,"No coaches in the system","Rowing Club",JOptionPane.WARNING_MESSAGE);
+        }
+        catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(null,"File must be saved and exited before displaying updated list!","Rowing Club",JOptionPane.WARNING_MESSAGE);
 
+        }
 
     }
     public void actionPerformed(ActionEvent e) {
@@ -425,7 +506,6 @@ public class RowingGUI extends JFrame implements ActionListener{
         if(e.getActionCommand() .equals("Load")) {
                 read();
         }
-
         else if(e.getActionCommand() .equals("Save")) {
             try {
                 save();
@@ -434,19 +514,14 @@ public class RowingGUI extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Error - data did not save!", "Rowing CLUB", JOptionPane.WARNING_MESSAGE);
             }
         }
-
         else if (e.getActionCommand() .equals ("Quit"))
         {
             JOptionPane.showMessageDialog(null, "System closing now, thanks for your time", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-
         else if (e.getActionCommand() .equals ("Add Member")){
-
             AddMember a = new AddMember();
-
         }
-
         else if (e.getActionCommand() .equals ("Update Member")){
             updateMember();
         }
@@ -458,26 +533,28 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
         else if (e.getActionCommand() .equals ("Add Coach")){
             AddCoach a = new AddCoach();
+            a.setVisible(true);
         }
         else if (e.getActionCommand() .equals ("Update Coach")){
-            removeMember();
+            updateCoach();
         }
         else if (e.getActionCommand() .equals ("Remove Coach")){
-            removeMember();
+            removeCoach();
         }
         else if (e.getActionCommand() .equals ("List All Coaches")){
             displayAllCoaches();
         }
-
         else if (e.getActionCommand() .equals ("Search")) {
             searchFunc();
         }
+        else if(e.getActionCommand() .equals ("Fees")) {
+            JOptionPane.showMessageDialog(null,"The total amount of fees from members for this year is: " + totalFees);
+        }
 
         else {
-            JOptionPane.showMessageDialog(null, "I have no idea what you clicked");
+            JOptionPane.showMessageDialog(null, "I have no idea what you clicked","Rowing Club",JOptionPane.WARNING_MESSAGE);
         }
-
-        }
+    }
     private void searchFunc() {
 
         String[] options  = { "Forename", "Surname", "Gender", "Email", "Phone", "Age", "Height", "Date Registered","Paid Status"  };
@@ -490,7 +567,7 @@ public class RowingGUI extends JFrame implements ActionListener{
         ArrayList<Integer> ageArray = new ArrayList<>();
         ArrayList<Integer> heightArray = new ArrayList<>();
         ArrayList<String> dateregisteredArray = new ArrayList<>();
-        ArrayList<Boolean> paidArray = new ArrayList<>();
+        ArrayList<String> paidArray = new ArrayList<>();
 
         try {
             String input = (String) JOptionPane.showInputDialog(null, "Search Criteria",
@@ -508,7 +585,7 @@ public class RowingGUI extends JFrame implements ActionListener{
                 ageArray.add(members.get(k).getAge());
                 heightArray.add(members.get(k).getHeight());
                 dateregisteredArray.add(members.get(k).getDateregistered());
-                paidArray.add(members.get(k).isPaid());
+                paidArray.add(members.get(k).getPaidstring());
 
             }
 
@@ -532,37 +609,48 @@ public class RowingGUI extends JFrame implements ActionListener{
                 dateregistered += t + 1 + ". " + fnameArray.get(t) + " " + snameArray.get(t) + "  " + dateregisteredArray.get(t) + "\n";
                 paid += t + 1 + ". " + fnameArray.get(t) + " " + snameArray.get(t) + "  " + paidArray.get(t) + "\n";
             }
+
             switch (input) {
                 case "Forename":
                     JOptionPane.showMessageDialog(null, "List of members by forename: \n" + fname);
                     break;
+
                 case "Surname":
                     JOptionPane.showMessageDialog(null, "List of members sorted by surname: \n" + sname);
                     break;
+
                 case "Gender":
                     JOptionPane.showMessageDialog(null, "List of members sorted by gender: \n" + gender);
                     break;
+
                 case "Email":
                     JOptionPane.showMessageDialog(null, "List of members sorted by email: \n" + email);
                     break;
+
                 case "Phone":
                     JOptionPane.showMessageDialog(null, "List of members sorted by phone: \n" + phone);
                     break;
+
                 case "Age":
                     JOptionPane.showMessageDialog(null, "List of members sorted by age: \n" + age);
                     break;
+
                 case "Height":
                     JOptionPane.showMessageDialog(null, "List of members sorted by height: \n" + height);
                     break;
+
                 case "Date Registered":
                     JOptionPane.showMessageDialog(null, "List of members sorted by date registered: \n" + dateregistered);
                     break;
+
                 case "Paid Status":
                     JOptionPane.showMessageDialog(null, "List of members sorted by paid status: \n" + paid);
                     break;
+
                 default:
                     JOptionPane.showMessageDialog(null, "Unsure what you clicked!");
                     break;
+
             }
         }
         catch(NullPointerException n) {

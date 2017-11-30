@@ -11,7 +11,7 @@ public abstract class Member implements Serializable {
     private int age;
     private int height;
     private String dateregistered;
-    private boolean paid;
+    private String paidstring;
     private Object experience;
     private String status;
     private Coach coach;
@@ -20,7 +20,7 @@ public abstract class Member implements Serializable {
 
    // public Member(){ this("Unknown","Unknown","Unknown","Unknown","Unknown",0,0,"Unknown","Unknown"); }
 
-    public Member(String fname,String sname,String gender,String email,String phone,int age,int height,String dateregistered, boolean paid, Object experience, String status, String coachFirstName, String coachLastName, String coachPhone)
+    public Member(String fname,String sname,String gender,String email,String phone,int age,int height,String dateregistered, String paidstring, Object experience, String status, String coachFirstName, String coachLastName, String coachPhone, String coachStatus)
     {
         setFname(fname);
         setSname(sname);
@@ -30,10 +30,10 @@ public abstract class Member implements Serializable {
         setAge(age);
         setHeight(height);
         setDateregistered(dateregistered);
-        setPaid(paid);
+        setPaidString(paidstring);
         setExperience(experience);
         setStatus(status);
-        setCoach(new Coach(coachFirstName, coachLastName, coachPhone));
+        setCoach(new Coach(coachFirstName, coachLastName, coachPhone, coachStatus));
         numObjects++;
         }
 
@@ -46,7 +46,7 @@ public abstract class Member implements Serializable {
     public int getHeight() { return height; }
     public String getDateregistered() { return dateregistered; }
     public String getStatus() { return status; }
-    public boolean isPaid() { return paid; }
+    public String getPaidstring() { return paidstring; }
     public Object getExperience() { return experience; }
 
 
@@ -59,9 +59,8 @@ public abstract class Member implements Serializable {
     public void setHeight(int height) { this.height = height; }
     public void setDateregistered(String dateregistered) { this.dateregistered = dateregistered; }
     public void setStatus(String status) { this.status = status; }
-    public void setPaid(boolean paid) { this.paid = paid; }
+    public void setPaidString(String paidstring) { this.paidstring = paidstring; }
     public void setExperience(Object experience) { this.experience = experience; }
-
     public Coach getCoach() { return coach; }
     public void setCoach(Coach coach) { this.coach = coach; }
 
@@ -74,6 +73,6 @@ public abstract class Member implements Serializable {
     public String toString() {
 
         return "First name: " + fname + "\nLast name: " + sname + "\nGender: " + gender + "\nEmail: " + email + "\nPhone: " + phone + "\nAge: " + age + "\nHeight: " + height +
-                "\nDate registered: " + dateregistered + "\nHave they paid?" + paid + "\nExperience: " + experience + "\nStatus: " + status + coach.toString();
+                "\nDate registered: " + dateregistered + "\nHave they paid? " + paidstring + "\nExperience: " + experience + "\nStatus: " + status + coach.toString();
     }
 }

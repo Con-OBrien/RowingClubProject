@@ -38,7 +38,6 @@ public class AddCoach extends JFrame implements ActionListener {
 
 
         pack();
-        setVisible(true);
     }
     public void actionPerformed(ActionEvent e) {
 
@@ -50,7 +49,9 @@ public class AddCoach extends JFrame implements ActionListener {
             String coachlastname = coachlastnameBox.getText();
             String coachphone = coachphoneBox.getText();
 
-            Coach coach = new Coach(coachfirstname, coachlastname, coachphone);
+            String coachstatus = "Active";
+
+            Coach coach = new Coach(coachfirstname, coachlastname, coachphone, coachstatus);
             RowingGUI.coaches.add(coach);
 
             setVisible(false);

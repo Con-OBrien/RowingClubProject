@@ -92,7 +92,7 @@ public class AddMember extends JFrame implements ActionListener {
 
         }
         private Standard addStandard() {
-
+            String paidstring = "";
 
             try {
                 String fname = fnameBox.getText();
@@ -107,13 +107,19 @@ public class AddMember extends JFrame implements ActionListener {
                 Object experience = experienceBox.getSelectedItem();
                 boolean paid = paidBox.isSelected();
 
+                if(paid) {
+                    paidstring = "Yes";
+                }
+                else {
+                    paidstring = "No";
+                }
 
                 LocalDate date = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
                 String dateregistered = date.format(formatter);
 
 
-                String coachfirstname = "", coachlastname = "", coachphone = "";
+                String coachfirstname = "", coachlastname = "", coachphone = "", coachstatus = "";
 
                 String status = "Active";
 
@@ -121,31 +127,37 @@ public class AddMember extends JFrame implements ActionListener {
                   coachfirstname = RowingGUI.coaches.get(0).getCoachFirstName();
                   coachlastname = RowingGUI.coaches.get(0).getCoachLastName();
                   coachphone = RowingGUI.coaches.get(0).getCoachPhone();
+                  coachstatus = RowingGUI.coaches.get(0).getCoachStatus();
                 } else if (age < 18 && experience.equals("Recreational")) {
                     coachfirstname = RowingGUI.coaches.get(1).getCoachFirstName();
                     coachlastname = RowingGUI.coaches.get(1).getCoachLastName();
                     coachphone = RowingGUI.coaches.get(1).getCoachPhone();
+                    coachstatus = RowingGUI.coaches.get(1).getCoachStatus();
                 } else if (age < 18 && experience.equals("Competitive")) {
                     coachfirstname = RowingGUI.coaches.get(2).getCoachFirstName();
                     coachlastname = RowingGUI.coaches.get(2).getCoachLastName();
                     coachphone = RowingGUI.coaches.get(2).getCoachPhone();
+                    coachstatus = RowingGUI.coaches.get(2).getCoachStatus();
                 } else if (age >= 18 && experience.equals("Novice")) {
                     coachfirstname = RowingGUI.coaches.get(3).getCoachFirstName();
                     coachlastname = RowingGUI.coaches.get(3).getCoachLastName();
                     coachphone = RowingGUI.coaches.get(3).getCoachPhone();
+                    coachstatus = RowingGUI.coaches.get(3).getCoachStatus();
                 } else if (age >= 18 && experience.equals("Recreational")) {
                     coachfirstname = RowingGUI.coaches.get(4).getCoachFirstName();
                     coachlastname = RowingGUI.coaches.get(4).getCoachLastName();
                     coachphone = RowingGUI.coaches.get(4).getCoachPhone();
+                    coachstatus = RowingGUI.coaches.get(4).getCoachStatus();
                 } else if (age >= 18 && experience.equals("Competitive")) {
                     coachfirstname = RowingGUI.coaches.get(5).getCoachFirstName();
                     coachlastname = RowingGUI.coaches.get(5).getCoachLastName();
                     coachphone = RowingGUI.coaches.get(5).getCoachPhone();
+                    coachstatus = RowingGUI.coaches.get(5).getCoachStatus();
                 }
                 RowingGUI.count++;
                 setVisible(false);
 
-                standard = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, paid, experience, status, coachfirstname, coachlastname, coachphone);
+                standard = new Standard(fname, sname, gender, email, phone, age, height, dateregistered, paidstring, experience, status, coachfirstname, coachlastname, coachphone, coachstatus);
                 RowingGUI.members.add(standard);
 
                 JOptionPane.showMessageDialog(null, "Member has been inserted: Make sure to save!\n\n" + standard.toString());
@@ -158,7 +170,7 @@ public class AddMember extends JFrame implements ActionListener {
             return standard;
         }
     private Athlete addAthlete() {
-
+            String paidString= "";
 
         try {
             String fname = fnameBox.getText();
@@ -168,44 +180,56 @@ public class AddMember extends JFrame implements ActionListener {
             String phone = phoneBox.getText();
             String ageAsString = ageBox.getText();
             int age = Integer.parseInt(ageAsString);
-            String heightAsString = phoneBox.getText();
+            String heightAsString = heightBox.getText();
             int height = Integer.parseInt(heightAsString);
             Object experience = experienceBox.getSelectedItem();
             boolean paid = paidBox.isSelected();
 
+            if(paid) {
+                paidString = "Yes";
+            }
+            else {
+                paidString = "No";
+            }
 
             LocalDate date = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
             String dateregistered = date.format(formatter);
 
 
-            String coachfirstname = "", coachlastname = "", coachphone = "";
+            String coachfirstname = "", coachlastname = "", coachphone = "", coachstatus="";
             String status = "Active";
 
             if (age < 18 && experience.equals("Novice")) {
                 coachfirstname = RowingGUI.coaches.get(0).getCoachFirstName();
                 coachlastname = RowingGUI.coaches.get(0).getCoachLastName();
                 coachphone = RowingGUI.coaches.get(0).getCoachPhone();
+                coachstatus = RowingGUI.coaches.get(0).getCoachStatus();
             } else if (age < 18 && experience.equals("Recreational")) {
                 coachfirstname = RowingGUI.coaches.get(1).getCoachFirstName();
                 coachlastname = RowingGUI.coaches.get(1).getCoachLastName();
                 coachphone = RowingGUI.coaches.get(1).getCoachPhone();
+                coachstatus = RowingGUI.coaches.get(1).getCoachStatus();
             } else if (age < 18 && experience.equals("Competitive")) {
                 coachfirstname = RowingGUI.coaches.get(2).getCoachFirstName();
                 coachlastname = RowingGUI.coaches.get(2).getCoachLastName();
                 coachphone = RowingGUI.coaches.get(2).getCoachPhone();
+                coachstatus = RowingGUI.coaches.get(2).getCoachStatus();
             } else if (age >= 18 && experience.equals("Novice")) {
                 coachfirstname = RowingGUI.coaches.get(3).getCoachFirstName();
                 coachlastname = RowingGUI.coaches.get(3).getCoachLastName();
                 coachphone = RowingGUI.coaches.get(3).getCoachPhone();
+                coachstatus = RowingGUI.coaches.get(3).getCoachStatus();
             } else if (age >= 18 && experience.equals("Recreational")) {
                 coachfirstname = RowingGUI.coaches.get(4).getCoachFirstName();
                 coachlastname = RowingGUI.coaches.get(4).getCoachLastName();
                 coachphone = RowingGUI.coaches.get(4).getCoachPhone();
+                coachstatus = RowingGUI.coaches.get(4).getCoachStatus();
             } else if (age >= 18 && experience.equals("Competitive")) {
                 coachfirstname = RowingGUI.coaches.get(5).getCoachFirstName();
                 coachlastname = RowingGUI.coaches.get(5).getCoachLastName();
                 coachphone = RowingGUI.coaches.get(5).getCoachPhone();
+                coachstatus = RowingGUI.coaches.get(5).getCoachStatus();
             }
 
             String input;
@@ -215,7 +239,7 @@ public class AddMember extends JFrame implements ActionListener {
 
             awards = input;
 
-            athlete = new Athlete(fname, sname, gender, email, phone, age, height, dateregistered, paid, experience, status, coachfirstname, coachlastname, coachphone, awards);
+            athlete = new Athlete(fname, sname, gender, email, phone, age, height, dateregistered, paidString, experience, status, coachfirstname, coachlastname, coachphone, coachstatus, awards);
             RowingGUI.members.add(athlete);
 
             JOptionPane.showMessageDialog(null, "Member has been inserted: Make sure to save!\n\n" + athlete.toString());
