@@ -114,9 +114,6 @@ public class RowingGUI extends JFrame implements ActionListener{
 
             for(i=0; i<members.size(); i++) {
 
-                if(members.size() == 0) {
-                  break;
-                }
                 memLoad[i] = members.get(i);
                     //Differentiating fee costs for standard members and athletes.
                 if(members.get(i).getExperience().equals("Competitive")) {
@@ -336,7 +333,6 @@ public class RowingGUI extends JFrame implements ActionListener{
                         break;
 
                 }
-
                 JOptionPane.showMessageDialog(null, "Make sure to save!\n\n" + members.get(i).toString(), "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
             }
         }
@@ -349,6 +345,7 @@ public class RowingGUI extends JFrame implements ActionListener{
             setVisible(true);
         }
     }
+
     //Update Coach Method
     private void updateCoach() {
 
@@ -465,25 +462,29 @@ public class RowingGUI extends JFrame implements ActionListener{
     //Display all members
     private void displayAll() {
 
-        JTextArea jta = new JTextArea();
-        jta.setFont(new Font("arian", Font.BOLD, 10));
-        jta.setSize(400,300);
+        try {
 
-        if (members.size()>0) {
-            jta.setText("Tralee Rowing Club Members List: \n\n");
-            for (int i = 0; i<members.size(); i++) {
-                try {
-                    jta.append("Member ID: " + (i + 1) + "\n" + memLoad[i].toString() + "\n\n");
-                }
-                catch (NullPointerException n) {
+            JTextArea jta = new JTextArea();
+            jta.setFont(new Font("arian", Font.BOLD, 10));
+            jta.setSize(400, 300);
+
+            if (members.size() > 0) {
+                jta.setText("Tralee Rowing Club Members List: \n\n");
+                for (int i = 0; i < members.size(); i++) {
+                    try {
+                        jta.append("Member ID: " + (i + 1) + "\n" + memLoad[i].toString() + "\n\n");
+                    } catch (NullPointerException n) {
                     n.printStackTrace();
+                    }
                 }
-            }
-            JOptionPane.showMessageDialog(null,jta);
+                JOptionPane.showMessageDialog(null, jta);
+            } else
+            JOptionPane.showMessageDialog(null, "No members in the system");
         }
-        else
-            JOptionPane.showMessageDialog(null,"No members in the system");
+        catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(null,"File must be saved and exited before displaying updated list!","Rowing Club",JOptionPane.WARNING_MESSAGE);
 
+        }
 
     }
 
