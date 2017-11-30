@@ -7,7 +7,13 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-
+/**<h1>Rowing GUI Class</h1>
+ * This class contains the main functionality of the program and contains the main GUI class.
+ * It contains the save/load file functions.
+ * It also maintains the updating/removing and display functions for members and coaches.
+ * @author Conor O'Brien
+ * @since 2017-11-30
+ */
 public class RowingGUI extends JFrame implements ActionListener{
 
     public static int count;
@@ -19,6 +25,7 @@ public class RowingGUI extends JFrame implements ActionListener{
     private int totalFees;
 
 
+    //No-Argument Constructor
     private RowingGUI() {
 
         newSystem();
@@ -58,7 +65,10 @@ public class RowingGUI extends JFrame implements ActionListener{
         RowingGUI me = new RowingGUI();
         me.setVisible(true);
     }
-    //Save data to Member & Coach files.
+
+    /**Save data to Member and Coach files.
+     @throws IOException is caught in case a file is not found
+     */
     public static void save() throws IOException {
             //Using two separate try & catch systems to save the output streams.
         try {
@@ -101,8 +111,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         JOptionPane.showMessageDialog(null,"File saved successfully!");
     }
 
-    //Load data from Member & Coach files.
-    private void read()
+    /**Read data from Member and Coach files.
+     * Creates an ObjectInputStream connected to members.dat and reads in all the members and loads them to memLoad.
+     * Also adds fees to the total depending on if they are competitive or not.
+     */
+    public void read()
     {
         int i;
         //Using two separate try & catch systems to load the input streams.
@@ -167,8 +180,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
         count = coaches.size();
     }
-        //File Menu Bar
-    private void fileMenu() {
+
+    /**Creates the file menu bar
+     * Creates seperate menu items: Load, Save and Quit.
+     */
+    public void fileMenu() {
 
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
@@ -190,8 +206,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         saveAction.addActionListener(this);
         exitAction.addActionListener(this);
     }
-        //Members Menu Bar
-    private void editMenu() {
+
+    /**Creates the edit menu bar
+     * Creates seperate menu items: Add, Update, Remove and List All Members.
+     */
+    public void editMenu() {
 
         JMenu editMenu;
         editMenu = new JMenu("Members");
@@ -219,8 +238,10 @@ public class RowingGUI extends JFrame implements ActionListener{
 
     }
 
-        //Coaches Menu Bar
-    private void coachMenu() {
+    /**Creates the coach menu bar
+     * Creates seperate menu items: Add, Update, Remove and List All Members.
+     */
+    public void coachMenu() {
 
         JMenu coachMenu;
         coachMenu = new JMenu("Coaches");
@@ -245,8 +266,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         listAllAction.addActionListener(this);
 
     }
-        //Search Menu Bar
-    private void searchMenu() {
+
+    /**Creates the search menu bar
+     * Creates seperate menu items: Search and Fees.
+     */
+    public void searchMenu() {
 
         JMenu searchMenu;
         searchMenu = new JMenu("Search");
@@ -263,8 +287,11 @@ public class RowingGUI extends JFrame implements ActionListener{
 
     }
 
-            //Update Member Method
-    private void updateMember() {
+    /**Updates a specific member from the member file
+     * Asks the user to input a surname and loop searches through the members file till it finds a corresponding surname.
+     * It asks what field they would like to update and allows them to update accordingly.
+      */
+    public void updateMember() {
 
 
         String question = JOptionPane.showInputDialog(null, "Enter the surname of the member you'd like to update: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
@@ -346,8 +373,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
     }
 
-    //Update Coach Method
-    private void updateCoach() {
+    /**Updates a specific coach from the coach file
+     * Asks the user to input a surname and loop searches through the members file till it finds a corresponding surname.
+     * It asks what field they would like to update and allows them to update accordingly.
+     */
+    public void updateCoach() {
 
 
         String question = JOptionPane.showInputDialog(null, "Enter the surname of the coach you'd like to update: ", "Rowing Club", JOptionPane.INFORMATION_MESSAGE);
@@ -405,8 +435,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
     }
 
-    //Remove Member Method
-    private void removeMember()
+    /**Removes a specific member from the member file
+     * Asks the user to input a surname and loop searches through the members file till it finds a corresponding surname.
+     * The system then sets the member to inactive.
+     */
+    public void removeMember()
     {
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the member you'd like to remove: ");
 
@@ -428,8 +461,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
     }
 
-    //Remove Coach Method
-    private void removeCoach()
+    /**Removes a specific coach from the coach file
+     * Asks the user to input a surname and loop searches through the members file till it finds a corresponding surname.
+     * The system then sets the member to inactive.
+     */
+    public void removeCoach()
     {
         String question = JOptionPane.showInputDialog(null,"Enter the surname of the coach you'd like to remove: ");
 
@@ -451,16 +487,20 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
     }
 
-    //Initialising the arrays
-    private void newSystem() {
+    /**Initialising the system
+     * Initialises an array of members and an array of coaches.
+     */
+    public void newSystem() {
         memLoad = new Member[50];
         coachLoad = new Coach[50];
 
         count = 0;
     }
 
-    //Display all members
-    private void displayAll() {
+    /**Display a list of all of the members.
+     * Loop appends a list of all of the members and adds them to the JTextArea
+     */
+    public void displayAll() {
 
         try {
 
@@ -488,8 +528,10 @@ public class RowingGUI extends JFrame implements ActionListener{
 
     }
 
-    //Display all coaches
-    private void displayAllCoaches() {
+    /**Display a list of all of the coaches.
+     * Loop appends a list of all of the coaches and adds them to the JTextArea.
+     */
+    public void displayAllCoaches() {
 
         JTextArea jta = new JTextArea();
         jta.setFont(new Font("arian", Font.BOLD, 10));
@@ -571,8 +613,11 @@ public class RowingGUI extends JFrame implements ActionListener{
         }
     }
 
-    //Search method, sorts data by specific critera.
-    private void searchFunc() {
+    /**Searches through the member list and sorts a list of data using certain criteria
+     * This method contains an arraylist of specific data for each of a Members attributes.
+     * It sorts them alphabetically and through a dropdown box, the admin selects how they want to sort the data.
+     */
+    public void searchFunc() {
 
         String[] options  = { "Forename", "Surname", "Gender", "Email", "Phone", "Age", "Height", "Date Registered","Paid Status"  };
 
