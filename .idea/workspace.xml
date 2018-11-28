@@ -19,10 +19,10 @@
     <session id="-418419663">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
-          <entry key="project.open.time.1" value="3" />
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.48" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -69,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RowingGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1989">
-              <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+            <state relative-caret-position="6681">
+              <caret line="577" column="9" lean-forward="true" selection-start-line="577" selection-start-column="9" selection-end-line="577" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -174,8 +174,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -409,11 +409,12 @@
       <workItem from="1543310348644" duration="1552000" />
       <workItem from="1543332253355" duration="1412000" />
       <workItem from="1543336292947" duration="1194000" />
+      <workItem from="1543437648936" duration="1080000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41780000" />
+    <option name="totallyTimeSpent" value="42860000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -427,7 +428,7 @@
   <component name="ToolWindowManager">
     <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24507658" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25054705" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
@@ -437,7 +438,7 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32767624" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24530168" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.24466892" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -595,8 +596,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RowingGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1989">
-          <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        <state relative-caret-position="6681">
+          <caret line="577" column="9" lean-forward="true" selection-start-line="577" selection-start-column="9" selection-end-line="577" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
